@@ -138,7 +138,6 @@ def get_columns(bq_schema):
             "scale": field.scale,
             "max_length": field.max_length,
         }
-        if field.field_type == "RECORD" or field.field_type == "STRUCT":
-            col_obj["raw_data_type"]= str(_get_sqla_column_type(field)).replace(', ',',').replace(' ',':').lower()
+        col_obj["raw_data_type"]= str(_get_sqla_column_type(field))
         col_list.append(col_obj)
     return col_list
