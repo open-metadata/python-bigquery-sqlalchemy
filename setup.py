@@ -26,8 +26,8 @@ from setuptools import setup
 
 # Package metadata.
 
-name = "sqlalchemy-bigquery"
-description = "SQLAlchemy dialect for BigQuery"
+name = "openmetadata-sqlalchemy-bigquery"
+description = "SQLAlchemy dialect for BigQuery by OpenMetadata"
 
 # Should be one of:
 # 'Development Status :: 3 - Alpha'
@@ -36,8 +36,6 @@ description = "SQLAlchemy dialect for BigQuery"
 release_status = "Development Status :: 5 - Production/Stable"
 
 package_root = os.path.abspath(os.path.dirname(__file__))
-with open(os.path.join(package_root, "sqlalchemy_bigquery", "version.py")) as f:
-    version = re.search('__version__ = "([^"]+)"', f.read()).group(1)
 
 
 def readme():
@@ -54,22 +52,19 @@ extras["all"] = set(itertools.chain.from_iterable(extras.values()))
 
 setup(
     name=name,
-    version=version,
+    version="0.2.2.dev1",
     description=description,
     long_description=readme(),
     long_description_content_type="text/x-rst",
-    author="The Sqlalchemy-Bigquery Authors",
+    author="The OpenMetadata Committers",
     author_email="googleapis-packages@google.com",
     packages=["sqlalchemy_bigquery"],
-    url="https://github.com/googleapis/python-bigquery-sqlalchemy",
+    url="https://github.com/open-metadata/OpenMetadata",
     keywords=["bigquery", "sqlalchemy"],
     classifiers=[
         release_status,
         "Intended Audience :: Developers",
         "License :: OSI Approved :: MIT License",
-        "Programming Language :: Python",
-        "Programming Language :: Python :: 3",
-        "Programming Language :: Python :: 3.6",
         "Programming Language :: Python :: 3.7",
         "Programming Language :: Python :: 3.8",
         "Programming Language :: Python :: 3.9",
@@ -88,7 +83,7 @@ setup(
         "future",
     ],
     extras_require=extras,
-    python_requires=">=3.6, <3.10",
+    python_requires=">3.6",
     tests_require=["packaging", "pytz"],
     entry_points={
         "sqlalchemy.dialects": ["bigquery = sqlalchemy_bigquery:BigQueryDialect"]
