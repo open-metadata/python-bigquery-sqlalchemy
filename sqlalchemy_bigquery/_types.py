@@ -83,14 +83,14 @@ def _get_transitive_schema_fields(fields):
     results = []
     for field in fields:
         results += [field]
-        # if field.field_type in STRUCT_FIELD_TYPES:
-        #     sub_fields = [
-        #         SchemaField.from_api_repr(
-        #             dict(f.to_api_repr(), name=f"{field.name}.{f.name}")
-        #         )
-        #         for f in field.fields
-        #     ]
-        #     results += _get_transitive_schema_fields(sub_fields)
+        if field.field_type in STRUCT_FIELD_TYPES:
+            sub_fields = [
+                SchemaField.from_api_repr(
+                    dict(f.to_api_repr(), name=f"{field.name}.{f.name}")
+                )
+                for f in field.fields
+            ]
+            results += _get_transitive_schema_fields(sub_fields)
     return results
 
 
@@ -138,7 +138,6 @@ def get_columns(bq_schema):
             "scale": field.scale,
             "max_length": field.max_length,
         }
-        if field.field_type == "RECORD" or field.field_type == "STRUCT":
-            col_obj["raw_data_type"]= str(_get_sqla_column_type(field)).replace(', ',',').replace(' ',':').lower()
-        col_list.append(a)
+        col_obj["raw_data_type"]= str(_get_sqla_column_type(field))
+        col_list.append(col_obj)
     return col_list
